@@ -27,8 +27,8 @@ OnHostRule = true
 entryPoint = "https"
 
 
-[[scanbots.domains]]
-main = "budweiser.houseofagile.com"
+[[houseofagile.domains]]
+main = "main.houseofagile.com"
 
 [web]
 address = ":8080"
