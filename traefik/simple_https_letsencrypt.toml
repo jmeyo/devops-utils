@@ -1,0 +1,60 @@
+debug=true
+traefikLogsFile = "logs_traefik.log"   
+accessLogsFile = "access_traefik.log"
+logLevel = "DEBUG"
+
+IdleTimeout = "45s"
+MaxIdleConnsPerHost = 2000
+
+defaultEntryPoints = ["http", "https"]
+[entryPoints]
+[entryPoints.http]
+address = ":80"
+[entryPoints.http.redirect]
+entryPoint = "https"
+[entryPoints.https]
+address = ":443"
+[entryPoints.https.tls]
+
+[houseofagile]
+email = "jc@houseofagile.com"
+# full path is better: "/etc/traefik/houseofagile.json"
+
+storage = "/etc/traefik/houseofagile.json"
+#onDemand = true
+#caServer = "https://acme-staging.api.letsencrypt.org/directory"
+OnHostRule = true
+entryPoint = "https"
+
+
+[[scanbots.domains]]
+main = "budweiser.houseofagile.com"
+
+[web]
+address = ":8080"
+
+[web.statistics]
+RecentErrors = 10
+
+[web.auth.basic]
+# replace #### hash pwd
+users = ["nimda:####"]
+
+[file]
+filename = "houseofagile.toml"
+watch=true
+
+[backends]
+[backends.example]
+[backends.example.servers.server1]
+url = "http://172.17.0.2:80"
+
+[frontends]
+[frontends.example]
+backend = "example"
+# passHostHeader 
+passHostHeader = true
+[frontends.example.routes.main]
+rule = "Host: service.example.com"
+
+
